@@ -1,0 +1,45 @@
+CREATE TABLE IF NOT EXISTS olympic (athelete STRING,
+age INT,
+country STRING,
+year STRING,
+closing_date STRING,
+sport STRING,
+gold INT,
+silver INT,
+bronze INT,
+total INT)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '\t' 
+STORED AS TEXTFILE;
+
+DESCRIBE olympic;
+
+LOAD DATA LOCAL INPATH '/home/acadgild/development/hive/datasets/olympix_data.csv' INTO TABLE olympic;
+
+Problem Statements:
+
+1. Write a Hive program to find the number of medals won by each country in swimming.
+
+SELECT country, SUM(total) AS swimming_medal 
+FROM olympic
+where sport ='Swimming'
+GROUP BY country;
+
+2. Write a Hive program to find the number of medals that India won year wise.
+
+SELECT year, SUM(total) AS medals_by_India FROM olympic 
+WHERE country ='India'
+GROUP BY year;
+
+
+3. Write a Hive Program to find the total number of medals each country won.
+
+SELECT country, SUM(total) AS total_medals FROM olympic
+GROUP BY country;
+
+4. Write a Hive program to find the number of gold medals each country won.
+
+SELECT country, SUM(gold) AS gold_medals FROM olympic
+WHERE gold>0
+GROUP BY country;
+
